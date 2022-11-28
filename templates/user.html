@@ -1,0 +1,11 @@
+{% extends "planta.html" %} {% block content %}
+<table border="1">
+  {% for keyi, value in result.items() %}
+  <tr>
+    <th>{{keyi}}</th>
+    <td>{{value}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}
