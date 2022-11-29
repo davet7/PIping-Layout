@@ -32,13 +32,13 @@
         </div>
 
         <li class="navbar__btn">
-          <a href="{{ url_for('planta') }}" class="button__1"> Planta </a>
+          <a href="{{ url_for('planta') }}" class="button__3"> Planta </a>
         </li>
         <li class="navbar__btn">
           <a href="{{ url_for('equipos') }}" class="button__2"> Equipos </a>
         </li>
         <li class="navbar__btn">
-          <a href="{{ url_for('piperack') }}" class="button__3"> Piperack </a>
+          <a href="{{ url_for('piperack') }}" class="button__1"> Piperack </a>
         </li>
         <li class="navbar__btn">
           <a href="{{ url_for('lineas') }}" class="button__4"> Lineas </a>
@@ -54,22 +54,60 @@
       </div>
     </nav>
     <div class="services">
-      <p>Ingrese la información del PIPERACK :</p>
-
       <div class="services__container">
         <div class="services__cont">
-          <h2>Contenedor izquierdo</h2>
-          <p>TEXTO</p>
-          <button>Enter</button>
+          <p><center>Ingrese información del Piperack</center></p>
+
+          {% block content %}
+          <form2 action="" method="POST">
+            <p>
+              {{form2.anchoP.label}}<br />
+              {{form2.anchoP(size=30)}}
+            </p>
+            <p>
+              {{form2.largoP.label}}<br />
+              {{form2.largoP(size=30)}}
+            </p>
+            <p>
+              {{form2.altoP.label}}<br />
+              {{form2.altoP(size=30)}}
+            </p>
+            <p>
+              {{form2.seccionesP.label}}<br />
+              {{form2.seccionesP(size=30)}}
+            </p>
+            <p>{{form2.submit()}}</p>
+          </form2>
+          {% if form2.is_submitted() %}
+          <p>
+            El ancho es: {{anchoP}}, largo es: {{largoP}} y alto es: {{altoP}}
+          </p>
+          <br />
+          {% endif %}
         </div>
         <div class="services__cont">
-          <h2>Contenedor derecho</h2>
-          <p>TEXTO</p>
-          <button>Enter</button>
+          {% if plot_urlpr %}
+          <p>Visualizacion 2D</p>
+          <img
+            src="{{plot_urlpr}}"
+            alt="Imagen no se puede ver"
+            width="400"
+            height="400"
+          />
+          {% endif %}
+          <p></p>
+          {% if plot3d_urlpr %}
+          <p>Visualizacion 3D</p>
+          <img
+            src="{{plot3d_urlpr}}"
+            alt="Imagen no se puede ver"
+            width="400"
+            height="400"
+          />
+          {% endif %}
         </div>
+        {% endblock %}
       </div>
     </div>
-
-    <script src="script.js"></script>
   </body>
 </html>

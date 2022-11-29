@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired
 class PiperackArea(FlaskForm):
     ancho = IntegerField('Ancho', validators=[DataRequired()])
     alto = IntegerField('Alto',validators=[DataRequired()])
-    submit = SubmitField('Enter')
+    submit = SubmitField('Ingresar')
 
 
 class Equipos(FlaskForm):
@@ -15,4 +15,12 @@ class Equipos(FlaskForm):
     coorY =IntegerField('Coordenada en Y',validators=[DataRequired()])
     coorZ =IntegerField('Coordenada en Z',validators=[DataRequired()])
     tipoEquipo = StringField('Tipo de equipo',validators=[DataRequired()])
-    submit = SubmitField('Enter')
+    submit = SubmitField('Ingresar')
+
+class PiperackP(FlaskForm):    
+    anchoP =IntegerField('Ancho',validators=[DataRequired()])    
+    largoP =IntegerField('Largo',validators=[DataRequired()])
+    altoP =IntegerField('Alto',validators=[DataRequired()])
+    seccionesP =IntegerField('Secciones')
+    submit = SubmitField('Ingresar')
+

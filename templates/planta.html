@@ -57,7 +57,12 @@
     <div class="services">
       <div class="services__container">
         <div class="services__cont">
-          <img src="static\css\imgs\Planta-guia2.png" allign="center" />
+          <img
+            src="static\css\imgs\Planta-guia2.png"
+            allign="center"
+            width="350"
+            height="150"
+          />
 
           <br />
           <p><center>Ingrese Área de Trabajo</center></p>
@@ -74,23 +79,35 @@
             </p>
             <p>{{form.submit()}}</p>
           </form>
+          {% if form.is_submitted() %}
+          <p>El alto es: {{alto}} y ancho es: {{ancho}}</p>
+          <br />
+          {% endif %}
+          <a href="{{ url_for('planta') }}"><button>Refrescar</button></a>
         </div>
         <div class="services__cont">
-          <h2>Visualizacion 2D/3D</h2>
-          <br />
-          <p>El alto es: {{alto}}</p>
-          <p>El alto es: {{ancho}}</p>
-          <br />
           {% if plot_url %}
-          <img src="{{plot_url}}" alt="Chart cannot be displayed" />
+          <p>Visualizacion 2D</p>
+          <img
+            src="{{plot_url}}"
+            alt="Imagen no se puede ver"
+            width="400"
+            height="400"
+          />
           {% endif %}
-
           <p></p>
+          {% if plot3d_url %}
+          <p>Visualizacion 3D</p>
+          <img
+            src="{{plot3d_url}}"
+            alt="Imagen no se puede ver"
+            width="400"
+            height="400"
+          />
+          {% endif %}
         </div>
         {% endblock %}
       </div>
     </div>
-
-    <script src="script.js"></script>
   </body>
 </html>

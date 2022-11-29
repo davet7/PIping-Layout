@@ -1,9 +1,10 @@
 from flask import Flask, render_template, redirect, request
-from form import PiperackArea # formulario
+from form import PiperackArea, PiperackP, Equipos # formulario
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
-
+import os
+from flask_caching import Cache
 import base64
 from io import BytesIO
 from matplotlib.figure import Figure
@@ -12,6 +13,7 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 
 
 app = Flask(__name__)
@@ -51,20 +53,63 @@ def planta():
     l = None
     fp = None
     sp=None
-    
     if form.is_submitted():
         ancho = int(request.form['ancho'])
         alto = int(request.form['alto'])
         world = np.zeros((alto,ancho))
-        l = int(len(world))
-        anchopr = 30 #int(input("Introduzca el alto Piperack: ")) 
-        altopr = 40 #int(input("Ancho Piperack: "))
 
-        f = (l - altopr)//2
+        fig1 = plt.figure()
+        plt.imshow(world)              
+        plt.savefig('static/area.png', bbox_inches='tight')
+
+        fig2 = plt.figure(figsize = (100,30))    
+        ax = fig2.add_subplot(111, projection='3d')
+        ax.scatter3D(alto, ancho, 2,s = 1000 , marker = "o", color='red')
+        ax.scatter3D(0, ancho, 2,s = 1000 , marker = "o", color='red')
+        ax.scatter3D(alto, 0, 2,s = 1000 , marker = "o", color='red')
+        ax.scatter3D(0, 0, 2,s = 1000 , marker = "o", color='red')
+        plt.savefig('static/area3d.png', bbox_inches='tight')
        
-        fp = int(((l - altopr)//2))  #3
+
+
+        return render_template('planta.html', form=form, alto=alto, ancho=ancho, get_plot = True, plot_url = 'static/area.png', plot3d_url= 'static/area3d.png')
+    return  render_template('planta.html', form=form, ancho=ancho,alto=alto)
+
+print(planta.ancho)
+
         
-        sp = l - ((l - altopr)//2) #7
+
+@app.route('/piperack', methods = ['GET', 'POST'])
+def piperack():
+    form=PiperackArea()
+    form2=PiperackP()
+    anchoP=None
+    largoP=None
+    altoP=None
+    seccionesP=None
+    f= None
+    l = None
+    fp = None
+    sp=None
+    world= None
+
+    
+    if form.is_submitted() and form2.is_submitted():
+        ancho = int(request.form['ancho'])
+        alto = int(request.form['alto'])
+        anchoP =int(request.form['anchoP'])  
+        largoP =int(request.form['largoP'])  
+        altoP =int(request.form['altoP'])  
+        seccionesP = int(request.form['seccionesP'])  
+
+        world = np.zeros((alto,ancho))
+        f = (l - largoP)//2
+        
+        fp = int(((l - largoP)//2))  #3
+        
+        sp = l - ((l - largoP)//2) #7
+        
+
         lin_piperack = []
 
         for i in range(fp):
@@ -91,31 +136,26 @@ def planta():
             world[sp][p] = 5
             linea = (sp,p)
             lin_piperack.append(linea)
-            
+
         xp = [x[1] for x in lin_piperack]
         yp = [y[0] for y in lin_piperack]
 
-        plt.imshow(world)
-        plt.savefig('static/my_plot.png')
-        '''
-        fig = plt.figure(figsize = (100,30))
-        ax = fig.add_subplot(111, projection='3d')
-        ax.scatter3D(xp, yp, 2,s = 500 , marker = "o", color='red')
-        plt.show()
-        '''
+        fig1 = plt.figure()
+        plt.imshow(world)              
+        plt.savefig('static/piperack2d.png', bbox_inches='tight')
 
+        fig2 = plt.figure(figsize = (100,30))    
+        ax = fig2.add_subplot(111, projection='3d')
+        plt.savefig('static/piperack3d.png', bbox_inches='tight')
 
-        return render_template('planta.html', form=form, alto=alto, ancho=ancho, get_plot = True, plot_url = 'static/my_plot.png')
-    return  render_template('planta.html', form=form, )
-
+        return render_template('piperack.html', form=form, form2=form2, alto = alto, ancho = ancho, anchoP=anchoP, largoP=largoP, altoP=altoP, seccionesP=seccionesP, get_plot = True, plot_urlpr = 'static/piperack2d.png', plot3d_urlpr= 'static/piperack3d.png')
+    return  render_template('piperack.html',form1=form, form2=form2)
 
 @app.route('/equipos')
 def equipos():
     return  render_template('equipos.html')
 
-@app.route('/piperack')
-def piperack():
-    return  render_template('piperack.html')
+
 
 @app.route('/lineas')
 def lineas():

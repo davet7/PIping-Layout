@@ -490,8 +490,8 @@
   background: #d81919;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  padding: 20px 30px;
+  height: 250vh;
+  padding: 10px 30px;
 }
 
 .contenido p {
@@ -504,7 +504,7 @@
   display: table-cell;
   margin-right: 30px;
   justify-content: center;
-  height: 50vh;
+  height: 120vh;
   width: 60%;
 }
 
@@ -512,7 +512,7 @@
   background-color: #101010;
   display: table-cell;
   justify-content: center;
-  height: 50vh;
+  height: 120vh;
   width: 20%;
 }
 .services {
@@ -520,7 +520,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height: 250vh;
 }
 
 .services h1 {
@@ -555,10 +555,10 @@
 }
 
 .services__cont {
-  margin: 1rem;
+  margin: 2rem;
   padding: 20px 20px;
-  height: 525px;
-  width: 400px;
+  height: 1100px;
+  width: 500px;
   border-radius: 4px;
   background-image: linear-gradient(
     to bottom,
