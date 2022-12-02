@@ -7,7 +7,7 @@
 
 .navbar {
   background: #141414;
-  height: 100px;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,12 +48,45 @@
   display: flex;
   align-items: center;
   list-style: none;
+  text-align: center;
 }
 
 .navbar__item {
   height: 80px;
 }
 
+.navbar__links {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+}
+
+.navbar_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 20px;
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: #21d4fd;
+  color: #fff;
+}
 .button_Guardar_planta {
   text-decoration: none;
   padding: 5px 5px;
@@ -187,6 +220,11 @@
 }
 .button_Guardar_linea:hover {
   background: #4837ff;
+  transition: all 0.3s ease;
+}
+
+.navbar__links:hover {
+  color: #4837ff;
   transition: all 0.3s ease;
 }
 
@@ -504,7 +542,7 @@
   display: table-cell;
   margin-right: 30px;
   justify-content: center;
-  height: 120vh;
+  height: 80vh;
   width: 60%;
 }
 
@@ -512,7 +550,7 @@
   background-color: #101010;
   display: table-cell;
   justify-content: center;
-  height: 120vh;
+  height: 80vh;
   width: 20%;
 }
 .services {
@@ -520,7 +558,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 250vh;
+  height: 180vh;
 }
 
 .services h1 {
@@ -611,7 +649,7 @@
 
 @media screen and (max-width: 960px) {
   .services {
-    height: 1600px;
+    height: 3200px;
   }
   .services h1 {
     font-size: 2rem;

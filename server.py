@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect, request
-from form import PiperackArea, PiperackP, Equipos # formulario
+from flask import Flask, render_template, redirect, request, session, url_for
+from flask_session import Session
+from form import PiperackArea, PiperackP, Equipos, Lineas # formulario
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
@@ -38,10 +39,19 @@ def hello():
 
 #app.run(debug=True)
 
-@app.route('/')
+@app.route('/', methods=["POST", "GET"])
 def index():
-    
-    return  render_template('index.html')
+        return render_template('index.html')
+
+@app.route('/app', methods=["POST", "GET"])
+def appToda():
+    form=PiperackArea()
+    form2=PiperackP()
+    form4=Lineas()
+    return render_template('app.html', form=form, form2=form2, form4=form4)
+
+
+
 
 @app.route('/planta', methods = ['GET', 'POST'])
 def planta():
@@ -75,26 +85,25 @@ def planta():
         return render_template('planta.html', form=form, alto=alto, ancho=ancho, get_plot = True, plot_url = 'static/area.png', plot3d_url= 'static/area3d.png')
     return  render_template('planta.html', form=form, ancho=ancho,alto=alto)
 
-print(planta.ancho)
+
 
         
 
 @app.route('/piperack', methods = ['GET', 'POST'])
 def piperack():
-    form=PiperackArea()
-    form2=PiperackP()
+    form=PiperackP()
     anchoP=None
     largoP=None
     altoP=None
     seccionesP=None
     f= None
-    l = None
-    fp = None
-    sp=None
+    l = 0
+    fp = 0
+    sp=0
     world= None
 
     
-    if form.is_submitted() and form2.is_submitted():
+    if form.is_submitted():
         ancho = int(request.form['ancho'])
         alto = int(request.form['alto'])
         anchoP =int(request.form['anchoP'])  
@@ -103,11 +112,11 @@ def piperack():
         seccionesP = int(request.form['seccionesP'])  
 
         world = np.zeros((alto,ancho))
-        f = (l - largoP)//2
+        f = int((l - largoP)//2)
         
-        fp = int(((l - largoP)//2))  #3
+        fp = int(((l - largoP)//2))  
         
-        sp = l - ((l - largoP)//2) #7
+        sp = int(l - ((l - largoP)//2)) 
         
 
         lin_piperack = []
@@ -140,16 +149,18 @@ def piperack():
         xp = [x[1] for x in lin_piperack]
         yp = [y[0] for y in lin_piperack]
 
+        
         fig1 = plt.figure()
         plt.imshow(world)              
         plt.savefig('static/piperack2d.png', bbox_inches='tight')
 
         fig2 = plt.figure(figsize = (100,30))    
         ax = fig2.add_subplot(111, projection='3d')
+        ax.scatter3D(xp, yp, 2,s = 1000 , marker = "o", color='red')
         plt.savefig('static/piperack3d.png', bbox_inches='tight')
 
-        return render_template('piperack.html', form=form, form2=form2, alto = alto, ancho = ancho, anchoP=anchoP, largoP=largoP, altoP=altoP, seccionesP=seccionesP, get_plot = True, plot_urlpr = 'static/piperack2d.png', plot3d_urlpr= 'static/piperack3d.png')
-    return  render_template('piperack.html',form1=form, form2=form2)
+        return render_template('piperack.html', form=form, alto = alto, ancho = ancho, anchoP=anchoP, largoP=largoP, altoP=altoP, seccionesP=seccionesP, get_plot = True, plot_urlpr = 'static/piperack2d.png', plot3d_urlpr= 'static/piperack3d.png')
+    return  render_template('piperack.html',form=form)
 
 @app.route('/equipos')
 def equipos():
@@ -159,7 +170,8 @@ def equipos():
 
 @app.route('/lineas')
 def lineas():
-    return  render_template('lineas.html')
+    form=Lineas()
+    return  render_template('lineas.html', form=form)
 
 @app.route('/resultados')
 def resultados():

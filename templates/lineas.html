@@ -47,22 +47,44 @@
             <div class="services__container">
                 <div class="services__cont">
                 
-                    <form>
-                        Numero:
-                        <input id="numero" type="number"/>
-                        <br/><br/> TAG:
-                        <input id="TAG" type="text"/>
-                        <br/><br/> Equipo 1:
-                        <input id="equipo1" type="text"/>
-                        <br/><br/> Equipo 2:
-                        <input id="equipo2" type="text"/>
-                        <br/><br/> Diámetro:
-                        <input id="diametro" type="number"/>
-                        <br/><br/>
-                        <center><input type="button" class="button_Guardar_linea" value="Guardar" onclick="matrizdelinea()"/></center><br/>
-                    </form>
-                        <button id="refresh">Recargar</button>
-        
+                {% block content %}
+                <form action="" method="POST">
+                    <p>
+                    {{form.numLinea.label}}<br />
+                    {{form.numLinea(size=30)}}
+                    </p>
+                    <p>
+                    {{form.tagLinea.label}}<br />
+                    {{form.tagLinea(size=30)}}
+                    </p>
+                    <p>
+                    {{form.equipo1.label}}<br />
+                    {{form.equipo1(size=30)}}
+                    </p>
+                    <p>
+                    {{form.diametro.label}}<br />
+                    {{form.diametro(size=30)}}
+                    </p>
+                    <p>{{form.submit()}}</p>
+                </form>
+                {% endblock %}
+          
+            <form>
+                Número:
+                <input id="numero" type="number"/>
+                <br/><br/> TAG:
+                <input id="TAG" type="text"/>
+                <br/><br/> Equipo 1:
+                <input id="equipo1" type="text"/>
+                <br/><br/> Equipo 2:
+                <input id="equipo2" type="text"/>
+                <br/><br/> Diámetro:
+                <input id="diametro" type="number"/>
+                <br/><br/>
+                <center><input type="button" class="button_Guardar_linea" value="Guardar" onclick="matrizdelinea()"/></center><br/>
+            </form>
+                <button id="refresh">Recargar</button>
+            <br />
                     <center><table border="1" width="100%" id:"Tablalineas"> 
                         <caption>Tabla de las lineas</caption>
                         <thead>
@@ -79,10 +101,11 @@
                     </table></center>
 
                     </div>
+                    <div class="services__cont">
+                    </div>
+                
                               
                 </div>
             </div>
-    <script src="script.js"></script>
-
 </body>
 </html>

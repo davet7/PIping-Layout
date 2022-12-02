@@ -59,26 +59,35 @@
           <p><center>Ingrese información del Piperack</center></p>
 
           {% block content %}
-          <form2 action="" method="POST">
+          <form action="" method="POST">
             <p>
-              {{form2.anchoP.label}}<br />
-              {{form2.anchoP(size=30)}}
+              {{form.ancho.label}}<br />
+              {{form.ancho(size=30)}}
             </p>
             <p>
-              {{form2.largoP.label}}<br />
-              {{form2.largoP(size=30)}}
+              {{form.alto.label}}<br />
+              {{form.alto(size=30)}}
+            </p>
+
+            <p>
+              {{form.anchoP.label}}<br />
+              {{form.anchoP(size=30)}}
             </p>
             <p>
-              {{form2.altoP.label}}<br />
-              {{form2.altoP(size=30)}}
+              {{form.largoP.label}}<br />
+              {{form.largoP(size=30)}}
             </p>
             <p>
-              {{form2.seccionesP.label}}<br />
-              {{form2.seccionesP(size=30)}}
+              {{form.altoP.label}}<br />
+              {{form.altoP(size=30)}}
             </p>
-            <p>{{form2.submit()}}</p>
-          </form2>
-          {% if form2.is_submitted() %}
+            <p>
+              {{form.seccionesP.label}}<br />
+              {{form.seccionesP(size=30)}}
+            </p>
+            <p>{{form.submit()}}</p>
+          </form>
+          {% if form.is_submitted() %}
           <p>
             El ancho es: {{anchoP}}, largo es: {{largoP}} y alto es: {{altoP}}
           </p>

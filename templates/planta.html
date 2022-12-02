@@ -30,27 +30,28 @@
           <span class="bar"></span>
           <span class="bar"></span>
         </div>
-
-        <li class="navbar__btn">
-          <a href="{{ url_for('planta') }}" class="button__1"> Planta </a>
-        </li>
-        <li class="navbar__btn">
-          <a href="{{ url_for('equipos') }}" class="button__2"> Equipos </a>
-        </li>
-        <li class="navbar__btn">
-          <a href="{{ url_for('piperack') }}" class="button__3"> Piperack </a>
-        </li>
-        <li class="navbar__btn">
-          <a href="{{ url_for('lineas') }}" class="button__4"> Lineas </a>
-        </li>
-        <li class="navbar__btn">
-          <a href="{{ url_for('resultados') }}" class="button__5">
-            Resultados
-          </a>
-        </li>
-        <a href="{{ url_for('index') }}" id="navbar__logo"
-          >MAJOR PIPING LAYOUT</a
-        >
+        <ul class="navbar__menu">
+          <li class="navbar__btn">
+            <a href="{{ url_for('planta') }}" class="button__1"> Planta </a>
+          </li>
+          <li class="navbar__btn">
+            <a href="{{ url_for('equipos') }}" class="button__2"> Equipos </a>
+          </li>
+          <li class="navbar__btn">
+            <a href="{{ url_for('piperack') }}" class="button__3"> Piperack </a>
+          </li>
+          <li class="navbar__btn">
+            <a href="{{ url_for('lineas') }}" class="button__4"> Lineas </a>
+          </li>
+          <li class="navbar__btn">
+            <a href="{{ url_for('resultados') }}" class="button__5">
+              Resultados
+            </a>
+          </li>
+          <a href="{{ url_for('index') }}" id="navbar__logo"
+            >MAJOR PIPING LAYOUT</a
+          >
+        </ul>
       </div>
     </nav>
 
@@ -109,5 +110,9 @@
         {% endblock %}
       </div>
     </div>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='script.js') }}"
+    ></script>
   </body>
 </html>

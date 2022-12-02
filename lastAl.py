@@ -7,20 +7,20 @@ from mpl_toolkits.mplot3d import Axes3D
 
     # mapa rectangular de cualquier valor
 
-alto = 100 #int(input("Introduzca el alto del área de trabajo: "))
-ancho = 100 #int(input("Introduzca el ancho del área de trabajo: "))
+largo = 200#int(input("Introduzca el largo del área de trabajo: "))
+ancho = 200#int(input("Introduzca el ancho del área de trabajo: "))
 
-world = np.zeros((alto,ancho))
+world = np.zeros((largo,ancho))
 l = int(len(world))
 print(l)
 
-anchopr = 30 #int(input("Introduzca el Ancho Piperack: ")) 
+anchopr = 20 #int(input("Introduzca el Ancho Piperack: ")) 
 
-largopr = 30 #int(input("Introduzca el Largo Piperack: "))
+largopr = 40# int(input("Introduzca el Largo Piperack: "))
 
-altopr = 10 #int(input("Introduzca el Alto Piperack: "))
+altopr = 6#int(input("Introduzca el Alto Piperack: "))
 
-seccionespr = 2 #int(input("Introduzca el número de secciones del Piperack: "))
+seccionespr = 2#int(input("Introduzca el número de secciones del Piperack: "))
 seccionespr += 1
 
 
@@ -70,9 +70,27 @@ plotPiperackZ =  [ 0,  altopr,  altopr,  0,  altopr,  altopr,  0,  altopr, altop
 
 corEX = []
 corEY = []
+xa = []
+ya =[]
+nivel = 1
 
+fig1= plt.figure(1)
 plt.imshow(world)
-def muestraPiperack(seccionespr,plotPiperackX, plotPiperackY,plotPiperackL1, plotPiperackL2,plotPiperackZ,altopr,corEX, corEY):
+def muestra2d(plotPiperackX,plotPiperackY,largo,ancho, corEX, corEY,xa,ya):
+  fig2= plt.figure(2)
+  plt.gca().invert_yaxis()
+  plt.plot(plotPiperackX,plotPiperackY)
+  plt.scatter(0,0, s=1, color='white')
+  plt.scatter(largo,ancho,s=1, color='white')
+  plt.scatter(corEX, corEY,s=20, marker = 'x', color='green')
+  plt.scatter(xa,ya,s=20, color='blue')
+
+
+  return plt.plot
+
+muestra2d(plotPiperackX,plotPiperackY,largo,ancho, corEX, corEY, xa, ya)
+
+def muestraPiperack3d(seccionespr,plotPiperackX, plotPiperackY,plotPiperackL1, plotPiperackL2,plotPiperackZ,altopr,corEX, corEY,xa,ya, nivel):
   fig = plt.figure(figsize = (100,30))
   ax = fig.add_subplot(111, projection='3d')
 
@@ -80,14 +98,15 @@ def muestraPiperack(seccionespr,plotPiperackX, plotPiperackY,plotPiperackL1, plo
     ax.plot(plotPiperackX, plotPiperackY,((altopr/seccionespr))*(i+1), linewidth=10, color='red')
 
   ax.plot(plotPiperackL1, plotPiperackL2,plotPiperackZ, linewidth=10,color='red')
-  ax.scatter3D(0, 0, 0,s = 1 , marker = "o", color='red')
-  ax.scatter3D(alto, ancho, 0,s = 1 , marker = "o", color='red')
-  ax.scatter3D(corEX, corEY, 0,s = 800 , marker = "x", color='green')
+  ax.scatter3D(0, 0, 0,s = 1 , marker = "o", color='white')
+  ax.scatter3D(largo, ancho, 0,s = 1 , marker = "o", color='white')
+  ax.scatter3D(corEX, corEY, 0,s = 200 , marker = "x", color='green')
+  ax.scatter3D(xa, ya, ((altopr/seccionespr)*nivel), s = 100, color='blue')
  
   #ax.scatter3D(xp, yp, 2,s = 1000 , marker = "o", color='red')
   return plt.show()
 
-muestraPiperack(seccionespr,plotPiperackX, plotPiperackY,plotPiperackL1, plotPiperackL2,plotPiperackZ,altopr,corEX, corEY)
+muestraPiperack3d(seccionespr,plotPiperackX, plotPiperackY,plotPiperackL1, plotPiperackL2,plotPiperackZ,altopr,corEX, corEY,xa,ya, nivel)
 """
 world = [
         [0,0,0,0,0,0],
@@ -104,13 +123,18 @@ print(world)
 
 all_paths = []
 
-#equipos
+#equipos ARREGLAR EN PAGINA
 
+equipos = ["bomba1", "bomba2", "reactor1", "reactor2","tanque1", "tanque2" ]
+tagEquipos = [1,2,3,4,5,6]
+corEX = [80, 80, 100, 100, 120, 120, 150, 150, 170, 170]
+corEY = [5, 190, 5, 190, 5, 190, 5, 190, 5, 190]
+
+'''
 equipos = []
 tagEquipos = []
 corEX = []
 corEY = []
-
 
 
 ask = ''
@@ -134,9 +158,10 @@ while ask != "no":  #while submit new
     print(corEX)
     print(corEY)
 
-    muestraPiperack(seccionespr,plotPiperackX, plotPiperackY,plotPiperackL1, plotPiperackL2,plotPiperackZ,altopr,corEX, corEY)
+    muestra2d(plotPiperackX,plotPiperackY,largo,ancho, corEX, corEY,xa, ya)
+    muestraPiperack3d(seccionespr,plotPiperackX, plotPiperackY,plotPiperackL1, plotPiperackL2,plotPiperackZ,altopr,corEX, corEY,xa,ya, nivel)
 
-  
+'''
  
 #generar una conexión
 
@@ -153,10 +178,13 @@ while ask1 != "no":  #while submit new
     gx = corEX[equipoFinal-1]
     gy = corEY[equipoFinal-1]
 
+
         # define a start and end goals (x, y) (vertical, horizontal)
 
     start = (sx, sy)
-    goal = (gy, gx)
+    print(start)
+    goal = (gx, gy)
+    print(goal)
     """
     start = (5, 3)
     goal = (5, 25)
@@ -164,8 +192,9 @@ while ask1 != "no":  #while submit new
 
         # search
     path = AStar(world).search(start, goal)
-    print(path)
-
+    
+    if path == None:
+      print("No se puede realizar la conexión")
 
     xs = [x[1] for x in path]
     ys = [y[0] for y in path]
@@ -173,7 +202,7 @@ while ask1 != "no":  #while submit new
     print(len(xs))
     print(len(ys))
 
-    plt.figure(1)
+    plt.figure(3)
     plt.plot(xs, ys)
     plt.imshow(world)
 
@@ -189,22 +218,11 @@ while ask1 != "no":  #while submit new
     xa= [x[1] for x in all_paths]
     ya = [y[0] for y in all_paths]
 
-
-
-    #plt.figure(2)
     plt.imshow(world)
-    fig2 = plt.figure(figsize = (100,30))
-    ax = fig2.add_subplot(111, projection='3d')
-    
-    for i in range(seccionespr):
-      ax.plot(plotPiperackX, plotPiperackY,((altopr/seccionespr))*(i+1), linewidth=10, color='red')
-    ax.plot(plotPiperackL1, plotPiperackL2,plotPiperackZ, linewidth=10,color='red')
-    ax.scatter3D(0, 0, 0,s = 100 , marker = "o", color='red')
-    ax.scatter3D(alto, ancho, 0,s = 100 , marker = "o", color='red')
-    #ax.scatter3D(xp, yp, 1,s = 1000 , marker = "o", color='red')
-    ax.scatter3D(xa, ya, ((altopr/seccionespr)*nivel), s = 1000, color='blue')
 
-    plt.show()
+    muestra2d(plotPiperackX,plotPiperackY,largo,ancho, corEY, corEX,xa,ya)
+
+    muestraPiperack3d(seccionespr,plotPiperackX, plotPiperackY,plotPiperackL1, plotPiperackL2,plotPiperackZ,altopr,corEY, corEX,xa,ya,nivel)
 
 
 
